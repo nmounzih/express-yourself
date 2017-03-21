@@ -23,12 +23,8 @@ def word(text):
         return True
 
 
-# def words(text, count=None):
-#     if count:
-#         if re.findall(r'[A-Z-a-z]+', text) != count:
-#             return False
-#     else:
-#         return re.findall(r'[A-Z-a-z]+', text)
+def words(text, count=None):
+    return re.findall(r'[A-Z-a-z^!]+', text)
 
 
 def phone_number(number):
@@ -36,4 +32,12 @@ def phone_number(number):
 
 
 def money(number):
-    return re.findall(r'^[$][\d]+', number) or re.findall(r'^[$][\d]+[.][\d]+', number)
+    return re.findall(r'^[$][\d,.]+', number)
+
+
+def zipcode(number):
+    return re.findall(r'^[0-9]{5}(?:-[0-9]{4})?$', number)
+
+
+def date(number):
+    return re.findall(r'^[0-9]{1,4}[-/][\d][-/0-9]+', number)
