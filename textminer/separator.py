@@ -22,3 +22,15 @@ def phone_number(text):
             phone_dict['area_code'] = item[:3]
             phone_dict['number'] = item[3:6] + '-' + item[6:]
         return phone_dict
+
+
+def money(number):
+    money_dict = {}
+    match = re.findall('(?P<sign>[$]{1})(?P<how_much>[\d]+)', number)
+    for item in match:
+        money_dict['currency'] = item[0]
+        money_dict['amount'] = item[1]
+    return money_dict
+
+
+def zipcode(number):
