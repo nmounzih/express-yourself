@@ -1,1 +1,2 @@
 # express-yourself
+This is a file to practice writing and using regular expressions. There are three files in textminer: validator, separator, and extractor. There are three test files in tests that go with the textminer files. Extractor has a paragraph list and a regular expression to extract numbers from it. Validator has various assertions to validate regular expressions. And separator uses regular expressions to separate pieces of strings and put them in dictionaries. Basically, they do what their names say they do.
