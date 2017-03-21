@@ -26,7 +26,7 @@ def phone_number(text):
 
 def money(number):
     money_dict = {}
-    match = re.findall('(?P<sign>[$]{1})(?P<how_much>[\d]+)', number)
+    match = re.findall(r'(?P<sign>[$]{1})(?P<how_much>[\d]+)', number)
     for item in match:
         money_dict['currency'] = item[0]
         money_dict['amount'] = item[1]
@@ -34,3 +34,9 @@ def money(number):
 
 
 def zipcode(number):
+    zip_dict = {}
+    match = re.findall(r'(?P<zip1>^[0-9]{5})(?P<zip2>(?:-[0-9]{4})?$)', number)
+    for item in match:
+        zip_dict['zip'] = item[0]
+        zip_dict['plus4'] = item[1]
+    return zip_dict
