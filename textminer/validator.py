@@ -28,7 +28,7 @@ def phone_number(number):
 
 
 def money(number):
-    return re.search(r'^\$[0-9]{1,3}?(\,?[0-9]{3}*)(\.[0-9]{2})?$', number)
+    return re.search(r'^\$[0-9]{1,3}?(\,?[0-9]{3})*(\.[0-9]{2})?$', number)
 
 
 def zipcode(number):
