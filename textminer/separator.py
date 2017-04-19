@@ -25,46 +25,29 @@ def phone_number(text):
 
 
 def money(dollars):
-    result = re.search(r'^(?P<symbol>[$]{1})'
-                        r'(?P<number>^\$[0-9]{1,3}?(\,?[0-9]{3})*(\.[0-9]{2})?$', dollars)
-    if result:
-        return {'currency': result.group('symbol'), 'amount': result.group('number')}
-    return None
-    # money_dict = {}
-    # match = re.findall(r'(?P<sign>[$]{1})(?P<how_much>[\d]+)', number)
-    # for item in match:
-    #     money_dict['currency'] = item[0]
-    #     money_dict['amount'] = item[1]
-    # return money_dict
+    symbol = re.search(r'^(?P<symbol>[$]{1})', dollars)
+    if not symbol or len(dollars) == 1:
+        return None
+    number = re.search(r'(?P<number>^\$*[0-9]{1,3}?(\,?[0-9]{3})*(\.[0-9]{2})?$)', dollars)
+    if(dollars[1] == '$' or not number):
+        return None
+    number = number[0][1:].replace(',', '')
+    return {'currency': symbol[0], 'amount': float(number)}
 
 
 def zipcode(number):
-    result = re.search(r'^(?P<main>[0-9]{5})'
-                        r'[-](?P<four>(?:-[0-9]{4})?$', number)
+    result = re.search(r'^(?P<first>[0-9]{5})(-(?P<plus4>[0-9]{4}))?$', number)
     if result:
-        retun {'zip': result.group('original'), 'plus4': result.group('four')}
-    return None
+        return {"zip": result.group('first'), "plus4": result.group('plus4')}
+    else:
+        return None
 
 
 def date(number):
-     result = re.search(r'(?P<forward>(?P<my_month>([\d]{1,2}[/]))'
-                       r'(?P<my_day>([\d]{1,2}[/]))(?P<my_year>[\d]{4}))'
-                       r'|(?P<rev_year>[\d]{4})(?P<rev_month>([-][\d]{2}))'
-                       r'(?P<rev_day>([-][\d]{2}))', number)
+    result = re.search(r'^(?P<slashes>(?P<s_month>[0-9]{1,2})[/](?P<s_day>[0-9]{1,2})[/](?P<s_year>[0-9]{4}))|(?P<hyphens>(?P<h_year>[0-9]{4})[-](?P<h_month>[0-9]{1,2})[-](?P<h_day>[0-9]{1,2}))', number)
     if result:
-        if result.group('forward'):
-            return {'month': int(re.sub('^[0]', '',
-                                        re.sub('[/]', '',
-                                               result.group('my_month')))),
-                    'day': int(re.sub('^[0]', '',
-                                      re.sub('[/]', '',
-                                             result.group('my_day')))),
-                    'year': int(result.group('my_year'))}
-        return {'month': int(re.sub('^[0]', '',
-                                    re.sub('[-]', '',
-                                           result.group('rev_month')))),
-                'day': int(re.sub('^[0]', '',
-                                  re.sub('[-]', '',
-                                         result.group('rev_day')))),
-                'year': int(result.group('rev_year'))}
+        if result.group('slashes'):
+            return {"month": int(result.group('s_month')), "day": int(result.group('s_day')), "year": int(result.group('s_year'))}
+        else:
+            return {"month": int(result.group('h_month')), "day": int(result.group('h_day')), "year": int(result.group('h_year'))}
     return None
