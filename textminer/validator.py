@@ -37,4 +37,5 @@ def zipcode(number):
 
 
 def date(number):
-    return re.findall(r'^[0-9]{1,4}[-/][\d][-/0-9]+', number)
+    # return re.findall(r'^[0-9]{1,4}[-/][\d][-/0-9]+', number)
+    return re.search(r'^[0-9]{1,4}[-/][0-9]{1,2}[-/][0-9]{2,4}', number)
